@@ -129,7 +129,7 @@ module QueriesHelper
         other = value.other_issue(issue)
         l(value.label_for(issue)) + " ##{other.id}"
       when 'Issue'
-      	"#{value} - #{value.subject}"
+      	"#{value}"
       else
         value
       end
