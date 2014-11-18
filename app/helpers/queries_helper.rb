@@ -90,7 +90,7 @@ module QueriesHelper
       column_value(column, issue, value)
     end
   end
-  
+
   def column_value(column, issue, value)
     case column.name
     when :id
@@ -128,6 +128,8 @@ module QueriesHelper
       when 'IssueRelation'
         other = value.other_issue(issue)
         l(value.label_for(issue)) + " ##{other.id}"
+      when 'Issue'
+      	"#{value} - #{value.subject}"
       else
         value
       end
