@@ -258,8 +258,8 @@ class IssueQuery < Query
       @available_columns.each_with_index {|column, i| index = i if column.name == :estimated_hours}
       index = (index ? index + 1 : -1)
       # insert the column after estimated_hours or at the end
-      @available_columns.insert index, QueryColumn.new(:spent_hours,
-        :sortable => "COALESCE((SELECT SUM(hours) FROM #{TimeEntry.table_name} WHERE #{TimeEntry.table_name}.issue_id = #{Issue.table_name}.id), 0)",
+      @available_columns.insert index, QueryColumn.new(:total_spent_hours,
+        :sortable => "COALESCE((SELECT SUM(hours) FROM #{TimeEntry.table_name} time_entry LEFT JOIN #{Issue.table_name} child_issue ON time_entry.issue_id = child_issue.id WHERE #{TimeEntry.table_name}.issue_id = #{Issue.table_name}.id OR child_issue.parent_id IS NOT NULL), 0)",
         :default_order => 'desc',
         :caption => :label_spent_time
       )
